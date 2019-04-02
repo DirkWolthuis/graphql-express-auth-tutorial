@@ -6,6 +6,13 @@ import '@babel/polyfill'
 import { users, todos } from './mock'
 const express = require('express')
 const { ApolloServer, gql } = require('apollo-server-express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const bcrypt = require('bcrypt')
+/*
+    Some constants
+*/
+const SALT_ROUNDS = 10
 
 /*
     Creating the Express instance
@@ -89,10 +96,6 @@ const server = new ApolloServer({ typeDefs, resolvers })
 */
 
 server.applyMiddleware({ app })
-
-app.post('/create-account', (req, res) => {
-    //
-})
 
 /*
     Starting the app

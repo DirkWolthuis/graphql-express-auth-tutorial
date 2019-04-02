@@ -38,12 +38,14 @@ export const users = [
         id: 'd9a285a6-d2a0-43b1-a915-fe0e106315e2',
         name: 'Dirk H. Wolthuis',
         email: 'hallo+spam@ikbendirk.nl',
-        password: '',
+        password:
+            '$2b$10$hU27NlxJL/tXIjFfIEh1qOKdQb0fTiuefHp55lxyzp/tXZEaCh27a', //hash from password: Test123!
     },
     {
         id: '26b3ed2d-aa43-48ad-ad43-2478a480a83b',
         name: 'Sombody Else',
         email: 'email@email.com',
-        password: '',
+        password:
+            '$2b$10$U6J4kOfbShgHVEDvpG/LT.o7NCd6ff6eaumykulExKVDMQ0CBWSCK', //hash from password: Somebody123!
     },
 ]
