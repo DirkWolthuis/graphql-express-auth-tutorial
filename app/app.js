@@ -9,10 +9,13 @@ const { ApolloServer, gql } = require('apollo-server-express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
 /*
     Some constants
 */
-const SALT_ROUNDS = 10
+const SECRET_KEY =
+    'DPEZTPUaBiu5qUigB-hfAnR7U004i4UrfYPelwJ5Pfasdq5IaWZXKVl0lF-nbzCKs2bDTpbexhEJAmCdBMvZBuWrexdp89pLqzpZ_yOgdSY_3qd8WIjSMBpfqMCH52c8bLDpCL1NT_GcfcmA5UE052Qda-nBz8eOMcGeCBwfOCRNNXduRnwiOMEYgG-ZvKTwC7HP_jEC2zMN3ztL7yKKl4BT84qJfQd4fq280pqxZ5k6wQIdJ4xaugU96tNLdnL93FNosE80aVF1RI_DkbmLl0HaYjSZurEbsMWcDyXhp3iNr30IavqBhgA5pz257MLfFIT7FaRRAYbEUriAZijbYQ'
 
 /*
     Creating the Express instance
