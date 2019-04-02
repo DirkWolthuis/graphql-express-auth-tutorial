@@ -101,6 +101,45 @@ const server = new ApolloServer({ typeDefs, resolvers })
 server.applyMiddleware({ app })
 
 /*
+    Express routes/endpoints
+*/
+
+app.post('/get-token', async (req, res) => {
+    const { email, password } = req.body
+    const user = users.find(user => user.email === email)
+    if (user) {
+        //we use bcrypt to compare the hash in the database (mock.js) to the password the user provides
+        const match = await bcrypt.compare(password, user.password)
+        if (match) {
+            //we create the JWT for the user with our secret
+            //inside the token we encrypt some user data
+            //then we send the token to the user
+            const token = jwt.sign(
+                { email: user.email, id: user.id },
+                SECRET_KEY,
+            )
+
+            res.send({
+                success: true,
+                token: token,
+            })
+        } else {
+            //return error to user to let them know the password is incorrect
+            res.status(401).send({
+                success: false,
+                message: 'Incorrect credentials',
+            })
+        }
+    } else {
+        //return error to user to let them know the account there are using does not exists
+        res.status(404).send({
+            success: false,
+            message: `Could not find account: ${email}`,
+        })
+    }
+})
+
+/*
     Starting the app
 */
 app.listen(port, () =>
