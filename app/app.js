@@ -5,7 +5,11 @@
 import '@babel/polyfill'
 import { users, todos } from './mock'
 const express = require('express')
-const { ApolloServer, gql } = require('apollo-server-express')
+const {
+    ApolloServer,
+    gql,
+    AuthenticationError,
+} = require('apollo-server-express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
@@ -89,10 +93,27 @@ export const resolvers = {
 }
 
 /*
+    Creating our Apollo context function
+*/
+
+const context = ({ req }) => {
+    // get the user token from the headers
+    const token = req.headers.authorization || ''
+    const splitToken = token.split(' ')[1]
+    try {
+        jwt.verify(splitToken, SECRET_KEY)
+    } catch (e) {
+        throw new AuthenticationError(
+            'Authentication token is invalid, please log in',
+        )
+    }
+}
+
+/*
     Creating the Apollo server
 */
 
-const server = new ApolloServer({ typeDefs, resolvers })
+const server = new ApolloServer({ typeDefs, resolvers, context })
 
 /*
     Creating a link between Express and Apollo
